@@ -1,0 +1,12 @@
+{
+  "name": "lesson-design-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2026-05-22 --d1=DB",
+    "deploy": "wrangler pages deploy . --project-name=lesson-design-generator"
+  },
+  "devDependencies": {
+    "wrangler": "^4.50.0"
+  }
+}

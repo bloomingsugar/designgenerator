@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>レッスンデザインジェネレーター</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <section class="auth-screen" id="authScreen" hidden>
+      <div class="auth-card">
+        <img src="./assets/blooming-sugar-hero.png" alt="Blooming Sugar custom cookies and classes" />
+        <p class="eyebrow">Students Only</p>
+        <h2>講座生さま専用ログイン</h2>
+        <form id="authForm" class="auth-form">
+          <div class="field-group">
+            <label for="authName">お名前</label>
+            <input id="authName" name="name" autocomplete="name" />
+          </div>
+          <div class="field-group">
+            <label for="authEmail">メールアドレス</label>
+            <input id="authEmail" name="email" autocomplete="email" type="email" required />
+          </div>
+          <div class="field-group">
+            <label for="authPassword">パスワード</label>
+            <input id="authPassword" name="password" autocomplete="current-password" type="password" required />
+          </div>
+          <div class="auth-actions">
+            <button class="primary-button" id="loginButton" type="submit">ログイン</button>
+            <button class="ghost-button" id="registerButton" type="button">新規登録</button>
+          </div>
+          <p class="auth-message" id="authMessage" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <div class="app-shell" id="appShell" hidden>
+      <aside class="sidebar">
+        <div class="brand-mark">
+          <span class="brand-mark__symbol">BS</span>
+          <div>
+            <p class="eyebrow">Blooming Sugar</p>
+            <h1>レッスンデザインジェネレーター</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="メインメニュー">
+          <button class="nav-item active" type="button" data-page-target="defaults">お教室設定</button>
+          <button class="nav-item" type="button" data-page-target="board">レッスンデザイン案</button>
+          <button class="nav-item" type="button" data-page-target="saved">保存デザイン一覧</button>
+        </nav>
+
+        <div class="user-panel">
+          <span id="userNameLabel">デモモード</span>
+          <button id="logoutButton" type="button">ログアウト</button>
+        </div>
+
+      </aside>
+
+      <main class="workspace">
+        <header class="hero-view">
+          <img src="./assets/blooming-sugar-hero.png" alt="Blooming Sugar custom cookies and classes" />
+        </header>
+
+        <section class="topbar">
+          <div class="topbar-actions">
+            <button class="ghost-button" id="resetButton" type="button">リセット</button>
+            <button class="secondary-button" id="generateImageButton" type="button">AI画像を生成</button>
+            <button class="ghost-button" id="saveDesignButton" type="button">デザインを保存</button>
+            <button class="ghost-button" id="generateResumeButton" type="button">レジュメを生成</button>
+            <button class="primary-button" id="copyPromptButton" type="button">プロンプトをコピー</button>
+          </div>
+        </section>
+
+        <section class="default-panel page-panel" data-page="defaults">
+          <form class="control-panel defaults-form" id="defaultForm">
+            <div class="section-heading">
+              <p class="eyebrow">Default Settings</p>
+              <h3>毎回使うお教室情報</h3>
+            </div>
+
+            <div class="field-group">
+              <label for="businessName">お教室名</label>
+              <input id="businessName" name="businessName" value="Blooming Sugar" />
+            </div>
+
+            <div class="field-group">
+              <label for="valuesWorksheet">価値観発掘ワークシート</label>
+              <textarea id="valuesWorksheet" name="valuesWorksheet" rows="6">大切にしたい価値観、ブランドの原点、届けたい想いを貼り付けてください。</textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="persona">ペルソナ設定</label>
+              <textarea id="persona" name="persona" rows="6">理想のお客様の悩み、憧れ、ライフスタイル、選ぶ理由を貼り付けてください。</textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="classroomConcept">お教室コンセプト</label>
+              <textarea id="classroomConcept" name="classroomConcept" rows="4">Blooming Sugarらしい、上品でやさしい世界観のお菓子教室。</textarea>
+            </div>
+
+            <div class="field-group">
+              <label>ブランドカラー HTML 3色</label>
+              <div class="brand-color-grid">
+                <input name="brandColor1" placeholder="#E8EDF5" aria-label="ブランドカラー1" inputmode="text" maxlength="7" />
+                <input name="brandColor2" placeholder="#D9B8B1" aria-label="ブランドカラー2" inputmode="text" maxlength="7" />
+                <input name="brandColor3" placeholder="#8A7668" aria-label="ブランドカラー3" inputmode="text" maxlength="7" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="brandMotifs">ブランドモチーフ</label>
+              <textarea id="brandMotifs" name="brandMotifs" rows="4">お花、アンティーク調の小物、淡いピンク、リボン、上品なテーブルコーディネート</textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="tableImageInput">基本のテーブルコーディネート画像</label>
+              <div class="image-dropzone" id="tableImageDropzone" tabindex="0">
+                <img id="tableImagePreview" alt="基本のテーブルコーディネート画像プレビュー" hidden />
+                <div class="image-dropzone__empty" id="tableImageEmpty">
+                  <strong>画像を貼り付け・ドラッグ・選択</strong>
+                  <span>テーブルコーディネートの写真や参考画像をここに入れます</span>
+                </div>
+              </div>
+              <div class="image-actions">
+                <label class="file-button" for="tableImageInput">画像を選ぶ</label>
+                <input id="tableImageInput" type="file" accept="image/*" />
+                <button class="ghost-button compact-button" id="removeTableImageButton" type="button">画像を削除</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="layout-grid page-panel" data-page="board" hidden>
+          <form class="control-panel" id="brandForm">
+            <div class="field-group">
+              <label for="lessonConcept">レッスンコンセプト</label>
+              <textarea id="lessonConcept" name="lessonConcept" rows="4">繊細なお花と淡い色で、贈りたくなるクッキーを作る</textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="techniques">使用技術</label>
+              <textarea id="techniques" name="techniques" rows="3">アイシングの縁取り、なじみ模様、立体のお花絞り、細いライン装飾</textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="materials">使用材料</label>
+              <textarea id="materials" name="materials" rows="3">クッキー生地、ロイヤルアイシング、天然色素、アラザン、リボン</textarea>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label for="format">画像の用途</label>
+                <select id="format" name="format">
+                  <option>Instagram投稿</option>
+                  <option>Instagramストーリーズ</option>
+                  <option>講座スライド表紙</option>
+                  <option>LPファーストビュー</option>
+                  <option>広告バナー</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="ratio">サイズ</label>
+                <select id="ratio" name="ratio">
+                  <option value="1:1">1:1</option>
+                  <option value="4:5">4:5</option>
+                  <option value="9:16">9:16</option>
+                  <option value="16:9">16:9</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>トーン</label>
+              <div class="segmented" role="radiogroup" aria-label="トーン">
+                <label><input type="radio" name="tone" value="上品" checked />上品</label>
+                <label><input type="radio" name="tone" value="親しみ" />親しみ</label>
+                <label><input type="radio" name="tone" value="専門性" />専門性</label>
+                <label><input type="radio" name="tone" value="軽やか" />軽やか</label>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>お菓子タイプ</label>
+              <div class="tile-options">
+                <label><input type="radio" name="visual" value="アイシングクッキーのセットデザイン" checked /><span>クッキー</span></label>
+                <label><input type="radio" name="visual" value="カップケーキや焼き菓子のデザイン" /><span>焼き菓子</span></label>
+                <label><input type="radio" name="visual" value="シュガーケーキや立体菓子のデザイン" /><span>立体菓子</span></label>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label>カラーコード HTML 5色</label>
+              <div class="color-code-grid">
+                <input name="color1" placeholder="#E8EDF5" aria-label="カラー1" inputmode="text" maxlength="7" />
+                <input name="color2" placeholder="#FFFEFE" aria-label="カラー2" inputmode="text" maxlength="7" />
+                <input name="color3" placeholder="#D9B8B1" aria-label="カラー3" inputmode="text" maxlength="7" />
+                <input name="color4" placeholder="#8A7668" aria-label="カラー4" inputmode="text" maxlength="7" />
+                <input name="color5" placeholder="#C9A989" aria-label="カラー5" inputmode="text" maxlength="7" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="motifs">使いたいモチーフ</label>
+              <textarea id="motifs" name="motifs" rows="3">お花、リボン、アンティークの小物、レース、淡い光</textarea>
+            </div>
+          </form>
+
+          <section class="preview-stage">
+            <div class="preview-toolbar">
+              <div>
+                <p class="eyebrow">Design Preview</p>
+                <h3 id="previewTitle">Luma Atelier</h3>
+              </div>
+              <button class="secondary-button" id="generateButton" type="button">候補を作る</button>
+            </div>
+
+            <div class="canvas-wrap">
+              <canvas id="designCanvas" width="960" height="960" aria-label="生成画像プレビュー"></canvas>
+            </div>
+
+            <div class="prompt-box">
+              <div class="prompt-box__header">
+                <span>生成プロンプト</span>
+                <span id="copyStatus" aria-live="polite"></span>
+              </div>
+              <textarea id="promptOutput" rows="7" readonly></textarea>
+            </div>
+
+            <div class="generated-image-box" id="generatedImageBox" hidden>
+              <div class="prompt-box__header">
+                <span>AI生成画像</span>
+              </div>
+              <img id="generatedImagePreview" alt="AI生成画像プレビュー" />
+            </div>
+
+            <div class="resume-box" id="resumeBox" hidden>
+              <div class="prompt-box__header">
+                <span>生成レジュメ</span>
+                <button class="ghost-button compact-button" id="printResumeButton" type="button">印刷</button>
+              </div>
+              <iframe id="resumePreview" title="レジュメプレビュー"></iframe>
+            </div>
+
+            <div class="appeal-box">
+              <div class="prompt-box__header">
+                <span>媒体別の訴求アイディア</span>
+              </div>
+              <div class="appeal-list" id="appealOutput"></div>
+            </div>
+          </section>
+
+          <section class="gallery-panel">
+            <div class="section-heading">
+              <p class="eyebrow">Saved Variations</p>
+              <h3>候補ストック</h3>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+          </section>
+        </section>
+
+        <section class="saved-panel page-panel" data-page="saved" hidden>
+          <div class="control-panel">
+            <div class="section-heading">
+              <p class="eyebrow">Saved Designs</p>
+              <h3>保存デザイン一覧</h3>
+            </div>
+            <div class="saved-grid" id="savedDesigns"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

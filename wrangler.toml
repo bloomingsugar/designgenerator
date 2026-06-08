@@ -5,4 +5,5 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "lesson-design-generator-db"
-database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+database_id = database_id = "7cf8caed-cd93-4ad6-a525-6452034f631d"
+

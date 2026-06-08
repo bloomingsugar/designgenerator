@@ -29,3 +29,5 @@ Blooming Sugar 講座生限定で使う、レッスンデザイン案・画像�
 7. 再デプロイ
 
 画像生成には OpenAI API 利用料金が発生します。
+Deployment refresh: 2026-06-08
+
